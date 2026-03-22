@@ -1,0 +1,13 @@
+name: Lint Commits
+on: [pull_request]
+
+jobs:
+  check-commits:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Important: gets the full history to check all commits
+
+      - name: Conventional Commits Check
+        uses: wagoid/commitlint-github-action@v6
