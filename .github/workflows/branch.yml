@@ -1,0 +1,28 @@
+name: "Assert Branch Naming Convention"
+
+on:
+  push:
+    branches-ignore:
+      - main
+      - master
+      - production
+
+jobs:
+  check-branch-name:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Branch Name
+        run: |
+          # Get the current branch name
+          BRANCH_NAME=${GITHUB_REF#refs/heads/}
+          
+          # Our Regex pattern
+          PATTERN="^(refactor|ui|feat|fix|docs)\/.*$"
+          
+          if [[ ! $BRANCH_NAME =~ $PATTERN ]]; then
+            echo "Error: Invalid branch name '$BRANCH_NAME'."
+            echo "Branch names must start with: refactor/, ui/, feat/, fix/, or docs/"
+            exit 1
+          else
+            echo "Branch name '$BRANCH_NAME' is valid!"
+          fi
