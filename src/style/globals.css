@@ -1,0 +1,293 @@
+@import "tailwindcss";
+
+:root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9fafb;
+  /* Equivalent to Tailwind gray-50 */
+  --text-heading: #1f2937;
+  /* Equivalent to Tailwind gray-800 */
+  --text-body: #4b5563;
+  /* Equivalent to Tailwind gray-600 */
+  --accent: #3b82f6;
+  /* Equivalent to Tailwind blue-500 */
+  --accent-hover: #2563eb;
+  /* Equivalent to Tailwind blue-600 */
+  --card-bg: #ffffff;
+  --tag-bg: #f3f4f6;
+  /* Equivalent to Tailwind gray-100 */
+  --tag-text: #374151;
+  /* Equivalent to Tailwind gray-700 */
+  --border-light: #d1d5db;
+  /* Equivalent to Tailwind gray-300 */
+}
+
+* {
+  box-sizing: border-box;
+  cursor: none !important;
+}
+
+/* Hide scrollbar but keep scrolling */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.text-accent {
+  color: var(--accent);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  line-height: 1.6;
+  color: var(--text-body);
+  background-color: var(--bg-primary);
+  cursor: none;
+}
+
+/* 
+  Global element color overrides. Let Tailwind utility classes handle ONLY layout, sizes, and spacing!
+*/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--text-heading);
+}
+
+a {
+  text-decoration: none;
+  color: var(--accent);
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--accent-hover);
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Background Utility Classes using CSS vars */
+.bg-secondary {
+  background-color: var(--bg-secondary);
+}
+
+.bg-primary {
+  background-color: var(--bg-primary);
+}
+
+/* Common interactive element colors */
+.btn-primary {
+  background-color: var(--accent);
+  color: #ffffff;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-hover);
+}
+
+.btn-outline {
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  background-color: transparent;
+  transition: all 0.3s ease;
+}
+
+.btn-outline:hover {
+  background-color: var(--accent);
+  color: #ffffff;
+}
+
+.tech-tag {
+  background-color: var(--tag-bg);
+  color: var(--tag-text);
+}
+
+.mobile-menu {
+  background-color: var(--bg-primary);
+}
+
+.nav-link {
+  color: var(--text-body);
+}
+
+.nav-link:hover {
+  color: var(--accent);
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-light);
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  background-color: var(--bg-primary);
+  color: var(--text-body);
+  transition: all 0.3s ease;
+}
+
+.input-field:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--accent);
+  border-color: transparent;
+}
+
+.logo-text {
+  background: linear-gradient(to right, var(--text-heading), var(--text-body));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  transition: all 0.3s ease;
+}
+
+.logo-text:hover {
+  background: linear-gradient(to right, var(--accent), var(--accent-hover));
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.nav-underline {
+  background-color: var(--accent);
+}
+
+.bg-heading {
+  background-color: var(--text-heading);
+}
+
+.btn-dark {
+  background-color: var(--text-heading);
+  color: var(--bg-primary);
+  transition: background-color 0.3s ease;
+}
+
+.btn-dark:hover {
+  background-color: #000000;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Hero.tsx specific animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.text-rotate {
+  transition: opacity 0.3s ease;
+}
+
+.text-rotate-exit {
+  opacity: 0;
+}
+
+.text-rotate-enter {
+  opacity: 1;
+}
+
+@keyframes bounce-slow {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(10px);
+  }
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 2s infinite;
+}
+
+/* ==========================================================
+   Project Templates
+   ========================================================== */
+
+/* Orbit Theme */
+.theme-orbit {
+  --project-hero-bg: #26273B; 
+  --project-bg: #1A1C29; /* Distinct, slightly darker backer for content separation */
+  --project-card-bg: #1E233B;
+  --project-card-bg-dim: rgba(30, 35, 59, 0.4);
+  --project-terminal-bg: #0A0F1C;
+  --project-terminal-header: #121828;
+  --project-accent: #f97316;    
+  --tag-bg: var(--project-card-bg);
+  --tag-text: #ffffff;
+  --tag-border: #ffffff;
+  --text-heading: #ffffff;
+  --text-body: #ffffff;
+}
+
+/* We will use Tailwind arbitrary values where possible: bg-[var(--project-card-bg)] 
+   or simply write mapping utility classes. */
+.bg-project-main { background-color: var(--project-bg); }
+.bg-project-card { background-color: var(--project-card-bg); }
+.bg-project-card-dim { background-color: var(--project-card-bg-dim); }
+.bg-project-terminal { background-color: var(--project-terminal-bg); }
+.bg-project-terminal-header { background-color: var(--project-terminal-header); }
+.text-project-heading { color: var(--text-heading); }
+.text-project-body { color: var(--text-body); }
+
+/* WatchOut Theme */
+.theme-watchout {
+  --project-hero-bg: #f8fafc; 
+  --project-bg: #ffffff;
+  --project-card-bg: #f1f5f9;
+  --project-card-bg-dim: rgba(241, 245, 249, 0.4);
+  --project-terminal-bg: #0f172a; 
+  --project-terminal-header: #1e293b; 
+  --project-accent: #eab308; /* Yellow */
+  --tag-bg: var(--project-card-bg);
+  --tag-text: #000000;
+  --tag-border: #cbd5e1;
+  --text-heading: #000000;
+  --text-body: #1e293b;
+}
+
+/* SIS Theme */
+.theme-sis {
+  --project-hero-bg: #800000; /* Maroon */
+  --project-bg: #ffffff;
+  --project-card-bg: #f8fafc;
+  --project-card-bg-dim: rgba(248, 250, 252, 0.5);
+  --project-terminal-bg: #0f172a; 
+  --project-terminal-header: #1e293b; 
+  --project-accent: #eab308; /* Yellow */
+  --tag-bg: var(--project-card-bg);
+  --tag-text: #000000;
+  --tag-border: #cbd5e1;
+  --text-heading: #000000;
+  --text-body: #1e293b;
+}
