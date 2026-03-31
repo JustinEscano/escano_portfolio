@@ -142,7 +142,7 @@ const Hero: React.FC = () => {
                 GitHub
               </motion.a>
               <motion.a
-                href="/resume.pdf"
+                href={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/resume.pdf`}
                 target="_blank"
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}
