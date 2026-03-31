@@ -45,14 +45,14 @@ export default function SISDetail() {
       <Image src={sisLogo} alt="SIS Logo" width={56} height={56} className="drop-shadow-md rounded-xl" />
       <div className="flex flex-col">
         <span className="text-sm font-bold tracking-widest text-[#eab308] uppercase">Academic Portal</span>
-        <span className="text-3xl font-black tracking-tight text-white">Student Info System</span>
+        <span className="text-3xl font-black tracking-tight text-[#eab308]">Student Info System</span>
       </div>
     </div>
   );
 
   return (
     <div className="min-h-screen theme-sis">
-      <ProjectNavbarTheme scrolledBg="#ffffff" accent="#800000" hoverAccent="#991b1b" />
+      <ProjectNavbarTheme scrolledBg="#800000" accent="#eab308" hoverAccent="#facc15" />
 
       <div className="bg-[var(--project-hero-bg)]">
         <ProjectHero

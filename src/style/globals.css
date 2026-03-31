@@ -35,12 +35,13 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
 
 .text-accent {
-  color: var(--accent);
+  color: var(--project-accent, var(--accent));
 }
 
 body {
@@ -240,13 +241,14 @@ button {
 
 /* Orbit Theme */
 .theme-orbit {
-  --project-hero-bg: #26273B; 
-  --project-bg: #1A1C29; /* Distinct, slightly darker backer for content separation */
+  --project-hero-bg: #26273B;
+  --project-bg: #1A1C29;
+  /* Distinct, slightly darker backer for content separation */
   --project-card-bg: #1E233B;
   --project-card-bg-dim: rgba(30, 35, 59, 0.4);
   --project-terminal-bg: #0A0F1C;
   --project-terminal-header: #121828;
-  --project-accent: #f97316;    
+  --project-accent: #f97316;
   --tag-bg: var(--project-card-bg);
   --tag-text: #ffffff;
   --tag-border: #ffffff;
@@ -260,23 +262,44 @@ button {
 
 /* We will use Tailwind arbitrary values where possible: bg-[var(--project-card-bg)] 
    or simply write mapping utility classes. */
-.bg-project-main { background-color: var(--project-bg); }
-.bg-project-card { background-color: var(--project-card-bg); }
-.bg-project-card-dim { background-color: var(--project-card-bg-dim); }
-.bg-project-terminal { background-color: var(--project-terminal-bg); }
-.bg-project-terminal-header { background-color: var(--project-terminal-header); }
-.text-project-heading { color: var(--text-heading); }
-.text-project-body { color: var(--text-body); }
+.bg-project-main {
+  background-color: var(--project-bg);
+}
+
+.bg-project-card {
+  background-color: var(--project-card-bg);
+}
+
+.bg-project-card-dim {
+  background-color: var(--project-card-bg-dim);
+}
+
+.bg-project-terminal {
+  background-color: var(--project-terminal-bg);
+}
+
+.bg-project-terminal-header {
+  background-color: var(--project-terminal-header);
+}
+
+.text-project-heading {
+  color: var(--text-heading);
+}
+
+.text-project-body {
+  color: var(--text-body);
+}
 
 /* WatchOut Theme */
 .theme-watchout {
-  --project-hero-bg: #f8fafc; 
+  --project-hero-bg: #f8fafc;
   --project-bg: #ffffff;
   --project-card-bg: #f1f5f9;
   --project-card-bg-dim: rgba(241, 245, 249, 0.4);
-  --project-terminal-bg: #0f172a; 
-  --project-terminal-header: #1e293b; 
-  --project-accent: #eab308; /* Yellow */
+  --project-terminal-bg: #0f172a;
+  --project-terminal-header: #1e293b;
+  --project-accent: #eab308;
+  /* Yellow */
   --tag-bg: var(--project-card-bg);
   --tag-text: #000000;
   --tag-border: #cbd5e1;
@@ -290,16 +313,18 @@ button {
 
 /* SIS Theme */
 .theme-sis {
-  --project-hero-bg: #800000; /* Maroon */
+  --project-hero-bg: #800000;
+  /* Maroon */
   --project-bg: #ffffff;
   --project-card-bg: #f8fafc;
   --project-card-bg-dim: rgba(248, 250, 252, 0.5);
-  --project-terminal-bg: #0f172a; 
-  --project-terminal-header: #1e293b; 
-  --project-accent: #eab308; /* Yellow */
-  --tag-bg: var(--project-card-bg);
-  --tag-text: #ffffff;
-  --tag-border: #cbd5e1;
+  --project-terminal-bg: #0f172a;
+  --project-terminal-header: #1e293b;
+  --project-accent: #eab308;
+  /* Yellow */
+  --tag-bg: transparent;
+  --tag-text: #eab308;
+  --tag-border: #eab308;
   --text-heading: #000000;
   --text-body: #1e293b;
   --project-card-hover-bg: #800000;

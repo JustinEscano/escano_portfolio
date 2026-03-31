@@ -44,7 +44,7 @@ export default function ScreenshotCarousel({ slides }: ScreenshotCarouselProps) 
           src={slide.image}
           alt={slide.title}
           fill
-          className="object-contain animate-fade-in px-2 pt-1 pb-2 sm:px-4 sm:pt-2 sm:pb-4"
+          className="object-contain object-top animate-fade-in px-2 pt-1 pb-2 sm:px-4 sm:pt-2 sm:pb-4"
           sizes="(max-width: 768px) 100vw, 90vw"
           priority
         />
