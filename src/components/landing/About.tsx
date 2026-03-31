@@ -1,7 +1,9 @@
 "use client";
 
 import React from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
+import profilePic from '../../assets/Profile/profilepicture.jpg';
 
 const techStack = ['React', 'Next.js', 'TypeScript', 'Node.js', 'Python', 'PostgreSQL', 'MongoDB', 'Tailwind CSS'];
 
@@ -28,11 +30,13 @@ const About: React.FC = () => {
           >
             {/* The simple picture frame elevated with high shadow */}
             <div className="relative w-full max-w-[380px] aspect-[4/5] rounded-[28px] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.15)] ring-1 ring-slate-100 bg-slate-50 z-10">
-              <img 
-                src="/images/profile.jpg" 
-                alt="About Me" 
-                className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                onError={(e) => { e.currentTarget.src = 'https://via.placeholder.com/400x500?text=Profile+Picture' }}
+              <Image 
+                src={profilePic}
+                alt="About Me — Justin Escano" 
+                fill
+                className="object-cover transition-transform duration-700 hover:scale-105"
+                sizes="(max-width: 768px) 100vw, 380px"
+                priority
               />
             </div>
           </motion.div>

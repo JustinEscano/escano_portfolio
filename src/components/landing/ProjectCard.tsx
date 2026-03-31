@@ -14,9 +14,10 @@ interface ProjectCardProps {
   logo?: any;
   icon?: any;
   themeClass?: string;
+  showAccentTags?: boolean; // when true: use light yellow / black tags in non-hovered state
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ id, title, description, techStack, thumbnail, images, logo, icon, themeClass }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({ id, title, description, techStack, thumbnail, images, logo, icon, themeClass, showAccentTags }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -40,11 +41,12 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ id, title, description, techS
       onMouseLeave={() => setIsHovered(false)}
       whileHover={{ y: -6, boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)' }}
       transition={{ type: 'spring', stiffness: 260, damping: 22 }}
-      className={`border rounded-2xl overflow-hidden shadow-lg group h-full flex flex-col transition-all duration-500 overflow-hidden relative z-10 ${
+      className={`border rounded-2xl overflow-hidden shadow-lg group h-full flex flex-col transition-all duration-500 relative z-10 ${
         isHovered && themeClass
-          ? `${themeClass} bg-[var(--project-card-bg)] border-white/10 shadow-[0_0_30px_rgba(249,115,22,0.15)]`
+          ? `${themeClass} border-white/10 shadow-[0_0_30px_rgba(249,115,22,0.15)]`
           : 'bg-white border-slate-200'
       }`}
+      style={isHovered && themeClass ? { backgroundColor: 'var(--project-card-hover-bg)' } : undefined}
     >
       {/* Thumbnail / Carousel */}
       <div className="relative h-48 overflow-hidden bg-slate-100 flex items-center justify-center">
@@ -74,22 +76,22 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ id, title, description, techS
               transition={{ duration: 0.4 }}
               className="absolute inset-0 bg-slate-900/60 flex items-center justify-center backdrop-blur-sm"
             >
-              <img 
-                src={typeof logo === 'string' ? logo : logo.src} 
-                alt={`${title} Logo`} 
-                className="max-w-[140px] max-h-[80px] drop-shadow-2xl" 
-                style={{ objectFit: 'contain' }}
-              />
-              {/* App icon badge — bottom-left corner */}
-              {icon && (
-                <div className="absolute bottom-3 left-3">
+              {/* Icon + Logo side by side */}
+              <div className="flex items-center gap-3">
+                {icon && (
                   <img
                     src={typeof icon === 'string' ? icon : icon.src}
                     alt={`${title} icon`}
-                    className="w-10 h-10 object-contain rounded-xl shadow-lg ring-2 ring-white/20"
+                    className="w-12 h-12 object-contain rounded-xl shadow-lg ring-2 ring-white/20 flex-shrink-0"
                   />
-                </div>
-              )}
+                )}
+                <img 
+                  src={typeof logo === 'string' ? logo : logo.src} 
+                  alt={`${title} Logo`} 
+                  className="max-w-[130px] max-h-[70px] drop-shadow-2xl" 
+                  style={{ objectFit: 'contain' }}
+                />
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
@@ -97,19 +99,32 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ id, title, description, techS
 
       {/* Content */}
       <div className="p-6 sm:p-8 flex flex-col flex-1 relative z-20 transition-colors duration-500">
-        <h3 className={`text-2xl font-extrabold mb-3 tracking-tight transition-colors duration-500 ${isHovered && themeClass ? 'text-white' : 'text-slate-900'}`}>
+        <h3 
+          className={`text-2xl font-extrabold mb-3 tracking-tight transition-colors duration-500 ${!isHovered || !themeClass ? 'text-slate-900' : ''}`}
+          style={isHovered && themeClass ? { color: 'var(--project-card-hover-heading)' } : undefined}
+        >
           {title}
         </h3>
-        <p className={`mb-6 leading-relaxed flex-1 font-medium transition-colors duration-500 ${isHovered && themeClass ? 'text-slate-300' : 'text-slate-500'}`}>{description}</p>
+        <p 
+          className={`mb-6 leading-relaxed flex-1 font-medium transition-colors duration-500 ${!isHovered || !themeClass ? 'text-slate-500' : ''}`}
+          style={isHovered && themeClass ? { color: 'var(--project-card-hover-body)' } : undefined}
+        >
+          {description}
+        </p>
 
         {/* Tech tags */}
         <div className="flex flex-wrap gap-2 mb-8">
           {techStack.slice(0, 3).map((tech) => (
-            <span key={tech} className={`px-3 py-1.5 rounded-lg text-[13px] font-bold border shadow-sm cursor-default transition-all duration-500 ${
+            <span key={tech} 
+              className={`px-3 py-1.5 rounded-lg text-[13px] font-bold border shadow-sm cursor-default transition-all duration-500 ${
               isHovered && themeClass
-                ? 'bg-black/40 text-[var(--project-accent)] border-white/10'
-                : 'bg-slate-50 text-slate-700 border-slate-200/60'
-            }`}>
+                ? 'bg-[var(--project-accent)] border-transparent'
+                : showAccentTags
+                  ? 'bg-white text-black border-slate-200'
+                  : 'bg-slate-50 text-slate-700 border-slate-200/60'
+            }`}
+              style={isHovered && themeClass ? { color: 'var(--tag-text)' } : undefined}
+            >
               {tech}
             </span>
           ))}
@@ -118,9 +133,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ id, title, description, techS
         {/* Learn more link */}
         <Link
           href={`/project/${id}`}
-          className={`font-bold inline-flex items-center gap-1.5 transition-colors duration-500 mt-auto group-hover:-translate-y-0.5 ${
-            isHovered && themeClass ? 'text-[var(--project-accent)]' : 'text-blue-600 hover:text-blue-700'
-          }`}
+          className={`font-bold inline-flex items-center gap-1.5 transition-colors duration-500 mt-auto group-hover:-translate-y-0.5 ${!isHovered || !themeClass ? 'text-blue-600 hover:text-blue-700' : ''}`}
+          style={isHovered && themeClass ? { color: 'var(--project-card-hover-link)' } : undefined}
         >
           Learn More
           <motion.span

@@ -61,7 +61,7 @@ export default function OrbitDetail() {
         title="Orbit"
         description="Orbit is a smart platform that monitors room security, energy and maintenance requests to automate building operations and make facilities more efficient and comfortable. It uses AI for energy optimization, device diagnostic, and room analysis based on real-time data, letting users monitor everything from a web or mobile app. By simulating IoT devices, Orbit cuts costs, prevents breakdowns, and improves daily life for occupants through simple, secure controls."
         techStack={['React', 'PostgreSQL', 'MongoDB', 'Django', 'Flutter']}
-        githubLink="https://github.com/yourusername/ecommerce-platform"
+        githubLink="https://github.com/JustinEscano"
         logoSlot={orbitLogo}
         isDark={true}
         bgClass="bg-[var(--project-hero-bg)] border-transparent"

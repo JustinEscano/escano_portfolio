@@ -91,6 +91,7 @@ const Projects: React.FC = () => {
                       logo={project.logo}
                       icon={project.icon}
                       themeClass={project.themeClass}
+                      showAccentTags={project.showAccentTags}
                     />
                   </motion.div>
                 ))}

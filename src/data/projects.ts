@@ -7,6 +7,13 @@ import loginSS from '../assets/Orbit/LOGIN_SS.png';
 import usageSS from '../assets/Orbit/USAGE_SS.png';
 import watchoutAppIcon from '../assets/Watch Out/Watchout Icon.png';
 import watchoutLogoImg from '../assets/Watch Out/WatchOut Logo.png';
+import watchoutTitleSS from '../assets/Watch Out/WATCH_TITLE_SS.png';
+import watchoutGameplaySS from '../assets/Watch Out/WATCH_GAMEPLAY_SS.png';
+import sisLogo from '../assets/SIS/logo.png';
+import sisDashboardSS from '../assets/SIS/SIS_DASHBOARD_SS.png';
+import sisLoginSS from '../assets/SIS/SIS_LOGIN_SS.png';
+import sisStatsSS from '../assets/SIS/SIS_STATS_SS.png';
+import sisSubjectsSS from '../assets/SIS/SIS_SUBJECTS_SS.png';
 
 export interface Project {
   id: string;
@@ -23,6 +30,7 @@ export interface Project {
   liveLink?: string;
   features?: string[];
   type?: 'team' | 'solo';
+  showAccentTags?: boolean;
 }
 
 export const projects: Project[] = [
@@ -38,14 +46,14 @@ export const projects: Project[] = [
     logo: orbitLogo,
     icon: orbitIcon,
     themeClass: 'theme-orbit',
-    githubLink: 'https://github.com/yourusername/ecommerce-platform',
+    githubLink: 'https://github.com/JustinEscano',
     features: [
-      'User authentication and profiles',
-      'Product search and filtering',
-      'Shopping cart with quantity management',
-      'Secure checkout with Stripe',
-      'Order history and tracking',
-      'Admin dashboard for inventory management',
+      'Simulated Real-Time Dashboard',
+      'Room & Equipment Management',
+      'Maintenance Request System',
+      'Energy Usage Analytics',
+      'Predictive Maintenance',
+      'LLM Chat Insights',
     ],
   },
   {
@@ -54,30 +62,33 @@ export const projects: Project[] = [
     description: 'A fun, back-to-basics pixelated platformer game about reaching the highest stage you can depending on your skill level. Inspired by retro classics, Watch Out! brings back the charm of old-school platforming with a modern touch.',
     techStack: ['Python', 'Pygame', 'Platformer', 'Retro'],
     type: 'team',
-    thumbnail: watchoutLogoImg,
-    images: [watchoutAppIcon, watchoutLogoImg],
+    thumbnail: watchoutTitleSS,
+    images: [watchoutTitleSS, watchoutGameplaySS],
     logo: watchoutLogoImg,
     icon: watchoutAppIcon,
     themeClass: 'theme-watchout',
+    showAccentTags: true,
     githubLink: 'https://github.com/JTPOdev/WatchOut.git',
   },
   {
     id: 'student-information-system',
     title: 'Student Information System',
-    description: 'Real-time weather application with forecasts and interactive maps.',
-    longDescription: 'Weather application that provides current conditions, 5-day forecasts, and interactive weather maps. Integrates with multiple weather APIs and includes location detection.',
-    techStack: ['React', 'OpenWeatherMap API', 'Chart.js', 'CSS Modules'],
+    description: 'A comprehensive web-based Student Information System for managing student records, enrollment, subjects, grades, and academic statistics in one unified platform.',
+    longDescription: 'A full-featured Student Information System designed to streamline academic administration. Handles student records, subject enrollment, grade management, and real-time academic statistics through an intuitive dashboard.',
+    techStack: ['React', 'Django', 'PostgreSQL'],
     type: 'team',
-    thumbnail: '/images/projects/weather.jpg',
-    githubLink: 'https://github.com/yourusername/weather-dashboard',
-    liveLink: 'https://weather-demo.com',
+    thumbnail: sisDashboardSS,
+    images: [sisLoginSS, sisDashboardSS, sisSubjectsSS, sisStatsSS],
+    logo: sisLogo,
+    themeClass: 'theme-sis',
+    showAccentTags: true,
+    githubLink: 'https://github.com/JustinEscano',
     features: [
-      'Current weather conditions',
-      '5-day weather forecast',
-      'Interactive weather maps',
-      'Location detection',
-      'Search by city name',
-      'Temperature unit conversion',
+      'Student record management',
+      'Subject enrollment tracking',
+      'Grade and GWA computation',
+      'Academic statistics dashboard',
+      'Role-based access control',
     ],
   },
 ];
