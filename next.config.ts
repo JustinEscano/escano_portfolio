@@ -4,7 +4,6 @@ const isGithubActions = process.env.GITHUB_ACTIONS || false;
 const basePath = isGithubActions ? "/escano_portfolio" : "";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   reactCompiler: true,
   output: 'export',
   images: {
@@ -15,6 +14,9 @@ const nextConfig: NextConfig = {
   env: {
     NEXT_PUBLIC_BASE_PATH: basePath,
   },
+
+  // FIX: This must be at the top level, NOT inside experimental
+  allowedDevOrigins: ["localhost:3000", "192.168.*.*:3000", "192.168.*.*", "localhost"],
 };
 
 export default nextConfig;

@@ -23,7 +23,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="overflow-x-hidden w-[100vw] max-w-[100vw]">
-      <body className="overflow-x-hidden w-[100vw] max-w-[100vw] m-0 p-0">
+      <body className="overflow-x-hidden w-[100vw] max-w-[100vw] m-0 p-0" suppressHydrationWarning>
         <NavbarThemeProvider>
           {/* Custom cursor + mouse particles — rendered above everything */}
           <CustomCursor />

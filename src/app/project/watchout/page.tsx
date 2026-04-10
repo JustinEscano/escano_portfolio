@@ -59,7 +59,7 @@ export default function WatchoutDetail() {
           <section id="key-features" className="scroll-mt-32 bg-project-card border border-slate-200 rounded-3xl p-6 lg:p-10 mb-12 shadow-md backdrop-blur-sm">
             <h2 className="text-3xl font-bold mb-8 pb-4 border-b border-slate-300 text-project-heading flex items-center gap-3">
               <span className="w-2 h-8 bg-[var(--project-accent)] rounded-full inline-block"></span>
-              Screenshots
+              Key Features
             </h2>
             <ScreenshotCarousel slides={slides} />
           </section>
@@ -210,13 +210,13 @@ export default function WatchoutDetail() {
             </h2>
             <div className="mb-6 pb-6 border-b border-slate-200">
               <p className="text-lg text-slate-600 font-medium leading-relaxed">
-                As a key contributor to <strong className="text-black">Watch Out!</strong>, I was responsible for creating the visual identity and core gameplay mechanics of the game. Here's what I brought to the project:
+                As a key contributor to <strong className="text-black">Watch Out!</strong>, I was responsible for creating the visual identity and core gameplay mechanics of the game. Here&apos;s what I brought to the project:
               </p>
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {[
                 { title: 'Player Movement', desc: 'Implemented smooth character controls with jump physics and collision detection using pure Pygame math.' },
-                { title: 'Level Design & Environment', desc: 'Created map layouts with progressive difficulty, strategic flag placements, and parallax scrolling backgrounds.' },
+                { title: 'Leader of the Group', desc: 'Organized team efforts, managed task distribution, and guided the project vision from concept to completion.' },
                 { title: 'Frontend & Backend Logic', desc: 'Developed core game logic arrays, menu state management, and the overall game loop.' },
               ].map((contrib, i) => (
                 <div key={i} className="bg-white border border-slate-200 rounded-2xl p-6 hover:border-yellow-400 transition-colors duration-300 shadow-sm">

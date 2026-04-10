@@ -27,7 +27,12 @@
 
 * {
   box-sizing: border-box;
-  cursor: none !important;
+}
+
+@media (min-width: 768px) {
+  * {
+    cursor: none !important;
+  }
 }
 
 /* Hide scrollbar but keep scrolling */
@@ -51,7 +56,6 @@ body {
   line-height: 1.6;
   color: var(--text-body);
   background-color: var(--bg-primary);
-  cursor: none;
 }
 
 /* 
@@ -323,7 +327,7 @@ button {
   --project-accent: #eab308;
   /* Yellow */
   --tag-bg: transparent;
-  --tag-text: #eab308;
+  --tag-text: #ffffff;
   --tag-border: #eab308;
   --text-heading: #000000;
   --text-body: #1e293b;

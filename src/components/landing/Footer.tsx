@@ -45,12 +45,9 @@ const Footer: React.FC = () => {
           <div className="space-y-6">
             <h3 className="text-white font-bold tracking-widest uppercase text-sm mb-6">Projects</h3>
             <ul className="space-y-4">
-              <li><a href="#" className="hover:text-accent transition-colors">WATCHOUT!</a></li>
-              <li><a href="#" className="hover:text-accent transition-colors">PALDEX</a></li>
-              <li><a href="#" className="hover:text-accent transition-colors">U-CASH</a></li>
-              <li><a href="#" className="hover:text-accent transition-colors">PetPal</a></li>
-              <li><a href="#" className="hover:text-accent transition-colors">Baskit</a></li>
-              <li><a href="#" className="hover:text-accent transition-colors">Cryphoria</a></li>
+              <li><a href="/project/orbit" className="hover:text-accent transition-colors">Orbit</a></li>
+              <li><a href="/project/watchout" className="hover:text-accent transition-colors">Watchout!</a></li>
+              <li><a href="/project/student-information-system" className="hover:text-accent transition-colors">Student Information System</a></li>
             </ul>
           </div>
 

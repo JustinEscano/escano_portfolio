@@ -43,7 +43,7 @@ export default function CustomCursor() {
     <>
       {/* Inner Dot */}
       <motion.div
-        className="fixed z-[9999] pointer-events-none rounded-full"
+        className="fixed z-[9999] pointer-events-none rounded-full hidden md:block"
         style={{
           x: rawX, y: rawY,
           translateX: '-50%', translateY: '-50%',
@@ -57,7 +57,7 @@ export default function CustomCursor() {
 
       {/* Outer Circling Rectangle */}
       <motion.div
-        className="fixed z-[9998] pointer-events-none flex items-center justify-center rounded-sm"
+        className="fixed z-[9998] pointer-events-none hidden md:flex items-center justify-center rounded-sm"
         style={{
           x: ringX, y: ringY,
           translateX: '-50%', translateY: '-50%',
