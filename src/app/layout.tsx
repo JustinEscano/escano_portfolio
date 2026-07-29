@@ -8,6 +8,11 @@ import { NavbarThemeProvider } from '../contexts/NavbarThemeContext';
 export const metadata: Metadata = {
   title: 'Justin Escano | Portfolio',
   description: 'Personal portfolio of Justin Escano',
+  icons: {
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+    apple: '/favicon.svg',
+  },
 };
 
 export const viewport: Viewport = {

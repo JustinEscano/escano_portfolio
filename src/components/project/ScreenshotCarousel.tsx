@@ -36,7 +36,7 @@ export default function ScreenshotCarousel({ slides }: ScreenshotCarouselProps) 
 
       {/* ── Main Image ── */}
       <div
-        className="relative w-full overflow-hidden rounded-2xl border border-white/10 shadow-2xl bg-black/40"
+        className="relative w-full overflow-hidden rounded-2xl border border-white/10 shadow-2xl bg-black/10"
         style={{ aspectRatio: '16 / 9' }}
       >
         <Image
@@ -50,7 +50,7 @@ export default function ScreenshotCarousel({ slides }: ScreenshotCarouselProps) 
         />
 
         {/* Gradient overlay for caption legibility */}
-        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/90 via-black/40 to-transparent pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/60 via-black/20 to-transparent pointer-events-none" />
 
         {/* Caption pinned to bottom */}
         <div className="absolute bottom-0 left-0 right-0 px-6 sm:px-8 pb-6 pt-12 pointer-events-none">

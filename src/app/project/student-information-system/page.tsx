@@ -91,41 +91,41 @@ export default function SISDetail() {
             <div className="mb-10 bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm hover:border-yellow-400 transition-colors">
               <h3 className="text-2xl font-bold text-[#800000] mb-4">Primary Goal</h3>
               <p className="text-slate-600 leading-relaxed text-base">
-                The Student Information System is a smart, comprehensive platform designed to manage student records, automate enrollment processes, and track academic performance. Its objective is to streamline school operations, reduce manual workload, and provide a unified, efficient portal for students, faculty, and administrators.
+                The Student Information System is a smart, comprehensive platform designed to manage student records, automate enrollment processes, and track academic performance. Its objective is to streamline school operations, reduce manual workload, and provide a unified, efficient portal for students, faculty, and administrators. Remains unreleased due to not achieving my goal of making the school use it as their official SIS.
               </p>
             </div>
 
             <h3 className="text-2xl font-bold text-[#800000] mb-6 border-b border-slate-200 pb-3">Core Capabilities & Features</h3>
-            
+
             <div className="space-y-6">
               {[
-                { 
-                  category: '1. Superadmin Capabilities', 
+                {
+                  category: '1. Superadmin Capabilities',
                   items: [
                     { title: 'System Analytics', desc: 'Real-time dashboards displaying metrics on system usage, users, and overall academic performance.' },
                     { title: 'User Management', desc: 'Administrative control to audit, configure, and manage all Teacher and Student accounts.' },
                     { title: 'Subject Configurations', desc: 'Ability to create, delete, and control academic subjects offered by the institution.' },
                     { title: 'System Settings', desc: 'Centralized control over access protocols and role-based registration invite codes.' }
-                  ] 
+                  ]
                 },
-                { 
-                  category: '2. Teacher Capabilities', 
+                {
+                  category: '2. Teacher Capabilities',
                   items: [
                     { title: 'Student Analytics', desc: 'Dive deeply into individual student performance and class-wide academic trends.' },
                     { title: 'Subject Overview', desc: 'Complete overviews of subjects taught and the students enrolled within them.' },
                     { title: 'Grade Management', desc: 'Secure interfaces to log, manage, and update student grades.' },
                     { title: 'Attendance Tracking', desc: 'Tools to record and maintain accurate historical attendance for class sessions.' },
                     { title: 'Notifications', desc: 'An integrated engine for receiving and sending relevant academic updates.' }
-                  ] 
+                  ]
                 },
-                { 
-                  category: '3. Student Capabilities', 
+                {
+                  category: '3. Student Capabilities',
                   items: [
                     { title: 'Personal Dashboard', desc: 'A central hub showing daily academic requirements.' },
                     { title: 'Grade Progress', desc: 'Historical and current views of academic grade standings across all subjects.' },
                     { title: 'Attendance Overview', desc: 'Real-time tracking of attendance records and absentee limits.' },
                     { title: 'Course List', desc: 'Overviews of current academic workload and enrolled subjects.' }
-                  ] 
+                  ]
                 }
               ].map((group, i) => (
                 <div key={i} className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:border-[#800000]/40 transition-colors">
@@ -133,10 +133,10 @@ export default function SISDetail() {
                   <ul className="space-y-4">
                     {group.items.map((item, j) => (
                       <li key={j} className="flex items-start gap-3">
-                         <span className="w-1.5 h-1.5 rounded-full bg-yellow-500 mt-2 shrink-0"></span>
-                         <p className="text-slate-600 text-sm leading-relaxed">
-                           <strong className="text-black">{item.title}:</strong> {item.desc}
-                         </p>
+                        <span className="w-1.5 h-1.5 rounded-full bg-yellow-500 mt-2 shrink-0"></span>
+                        <p className="text-slate-600 text-sm leading-relaxed">
+                          <strong className="text-black">{item.title}:</strong> {item.desc}
+                        </p>
                       </li>
                     ))}
                   </ul>
