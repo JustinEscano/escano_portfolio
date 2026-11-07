@@ -4,7 +4,12 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ProjectCard from './ProjectCard';
 import { projects } from '../../data/projects';
-import ProjectShards3D from './ProjectShards3D';
+import dynamic from 'next/dynamic';
+
+const ProjectShards3D = dynamic(() => import('./ProjectShards3D'), {
+  ssr: false,
+  loading: () => null,
+});
 
 // Stagger container: children reveal one-by-one as they enter the viewport
 const gridVariants = {
@@ -110,7 +115,7 @@ const Projects: React.FC = () => {
                   onClick={() => setShowAllTeam(!showAllTeam)}
                   className="px-8 py-3 rounded-full border border-white/20 bg-white/5 hover:bg-white/10 text-white transition-all font-medium flex items-center gap-2 group"
                 >
-                  {showAllTeam ? 'Show Less' : 'View More'}
+                  {showAllTeam ? 'Show Less' : 'View All Projects'}
                   <svg 
                     xmlns="http://www.w3.org/2000/svg" 
                     width="16" height="16" fill="currentColor" 
@@ -173,7 +178,7 @@ const Projects: React.FC = () => {
               </div>
               <h4 className="text-xl sm:text-2xl font-bold text-white mb-3">Work in Progress</h4>
               <p className="text-gray-400 max-w-lg mx-auto text-lg">
-                I'm currently brewing up some exciting new solo projects. Check back soon!
+                I&apos;m currently brewing up some exciting new solo projects. Check back soon!
               </p>
             </motion.div>
           )}

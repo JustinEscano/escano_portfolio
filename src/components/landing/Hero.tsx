@@ -9,7 +9,12 @@ import {
   Variants,
 } from 'framer-motion';
 import TypedWrapper from '../misc/Typed';
-import ScrollShape3D from './HomeShape3D';
+import dynamic from 'next/dynamic';
+
+const ScrollShape3D = dynamic(() => import('./HomeShape3D'), {
+  ssr: false,
+  loading: () => null,
+});
 
 // ─── Animation Variants ───────────────────────────────────────────────────────
 
@@ -99,7 +104,7 @@ const Hero: React.FC = () => {
               variants={itemVariants}
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 md:mb-4"
             >
-              <span className="block">Hi, I'm</span>
+              <span className="block">Hi, I&apos;m</span>
               <span className="block text-accent">
                 <TypedWrapper
                   strings={['Justin Escano', 'a Developer', 'a Student', 'a Problem Solver']}

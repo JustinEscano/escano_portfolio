@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
+import finshieldLogo from '../../../assets/Finshield/FinShield Logo.png';
 import adminDashboardSS from '../../../assets/Finshield/Admin Dashboard.png';
 import superadminDashboardSS from '../../../assets/Finshield/Superadmin Dashboard.png';
 import invoiceCreationSS from '../../../assets/Finshield/Invoice Creation.png';
@@ -39,12 +41,15 @@ const slides = [
 
 export default function FinShieldDetail() {
   const finshieldLogoSlot = (
-    <div className="flex items-center gap-3">
-      <div className="w-14 h-14 rounded-2xl bg-emerald-950/80 border border-emerald-500/40 flex items-center justify-center shadow-lg shadow-emerald-950/50">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-8 h-8 text-emerald-400">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
-        </svg>
-      </div>
+    <div className="flex items-center gap-4">
+      <Image
+        src={finshieldLogo}
+        alt="FinShield Logo"
+        width={72}
+        height={72}
+        className="drop-shadow-2xl rounded-2xl object-contain shrink-0"
+        priority
+      />
       <div className="flex flex-col">
         <span className="text-xs font-bold tracking-widest text-emerald-400 uppercase">Enterprise Blockchain Integrity</span>
         <span className="text-3xl font-black tracking-tight text-white">FinShield</span>
@@ -223,7 +228,7 @@ export default function FinShieldDetail() {
 
               {/* Architecture directory */}
               <div>
-                <h3 className="text-xl font-bold text-white mb-6">Layered Service Architecture</h3>
+                <h3 className="text-xl font-bold text-white mb-6">System Modules &amp; Directory Structure</h3>
                 <div className="w-full bg-slate-900 rounded-2xl border border-slate-800 shadow-2xl overflow-hidden flex flex-col">
                   <div className="flex items-center px-4 py-3 border-b border-slate-800 bg-slate-950">
                     <div className="flex gap-2">
@@ -231,22 +236,30 @@ export default function FinShieldDetail() {
                       <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
                       <div className="w-3 h-3 rounded-full bg-emerald-500/80"></div>
                     </div>
-                    <div className="mx-auto text-xs text-slate-400 font-mono tracking-wider">finshield_architecture</div>
+                    <div className="mx-auto text-xs text-slate-400 font-mono tracking-wider">finshield</div>
                   </div>
                   <div className="p-6 font-mono text-sm text-slate-300 overflow-x-auto space-y-1 bg-slate-900">
                     {[
-                      { name: 'presentation/', desc: 'Next.js 14 client interfaces with role-specific authenticated workspaces & public QR verification route' },
-                      { name: 'api/', desc: 'Express.js application layer enforcing JWT, MFA, Zod validation, and branch/company RBAC boundaries' },
-                      { name: 'business-service/', desc: 'Domain rules for company, branch, catalog, invoices, credit memos, and immutable audit logging' },
-                      { name: 'asynchronous-workers/', desc: 'Redis & BullMQ outbox workers handling PDF generation, storage, Polygon anchoring, and email dispatch' },
-                      { name: 'document-analysis/', desc: 'Isolated Python FastAPI microservice using PyMuPDF and OpenCV for visual and text diff analysis' },
-                      { name: 'blockchain-solidity/', desc: 'Solidity smart contracts deployed on Polygon to anchor document SHA-256 hashes & storage references' },
-                      { name: 'storage-vault/', desc: 'Private S3-compatible object vault storing templates, invoices, and credit memos with versioning' },
+                      { name: 'FRONTEND/', desc: 'Next.js 14 client application with role-specific workspaces and public QR verification portal', isSub: false },
+                      { name: 'BACKEND/', desc: 'Express.js server, Prisma ORM, BullMQ background queues, and private S3 storage integration', isSub: false },
+                      { name: 'blockchain/', desc: 'Solidity smart contracts and ethers.js anchoring SHA-256 document hashes to Polygon', isSub: true },
+                      { name: 'workers/', desc: 'Redis & BullMQ outbox queue workers for non-blocking invoice PDF generation and storage vaulting', isSub: true },
+                      { name: 'src/', desc: 'Express.js REST API routes, JWT/MFA authentication, Zod validation, and branch/company RBAC rules', isSub: true },
+                      { name: 'AI/', desc: 'Python FastAPI microservice using PyMuPDF and OpenCV for visual and textual document difference detection', isSub: false },
                     ].map(folder => (
-                      <div key={folder.name} className="flex items-center gap-4 hover:bg-slate-800/60 p-2 rounded-lg transition-colors">
-                        <span className="text-emerald-400 text-xl">📁</span>
+                      <div
+                        key={folder.name}
+                        className={`flex items-center gap-4 hover:bg-slate-800/60 p-2 rounded-lg transition-colors ${
+                          folder.isSub ? 'ml-6 border-l-2 border-emerald-500/30 pl-4 bg-slate-950/40' : ''
+                        }`}
+                      >
+                        <span className={`text-xl ${folder.isSub ? 'text-emerald-400/80' : 'text-emerald-400'}`}>
+                          {folder.isSub ? '↳ 📁' : '📁'}
+                        </span>
                         <div className="flex flex-col">
-                          <span className="text-white font-bold">{folder.name}</span>
+                          <span className={`${folder.isSub ? 'text-emerald-300 font-medium' : 'text-white font-bold'}`}>
+                            {folder.name}
+                          </span>
                           <span className="text-slate-400 text-xs">{folder.desc}</span>
                         </div>
                       </div>
@@ -265,8 +278,11 @@ export default function FinShieldDetail() {
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {[
-                { name: 'Justin Paul Louise C. Escaño', role: 'Project Manager & Lead Full Stack Developer', link: 'https://github.com/JustinEscano' },
-                { name: 'Development Team Members', role: 'System Architecture & Research Collaborators', link: 'https://github.com/JustinEscano' },
+                { name: 'Karlos Son Rivo', role: 'Backend/Security Developer & Leader', link: '#' },
+                { name: 'Justin Paul Louise C. Escaño', role: 'Frontend Developer & Documentator', link: 'https://github.com/JustinEscano' },
+                { name: 'Trisha Buclares', role: 'Documentator for Capstone', link: '#' },
+                { name: 'Christian Mondala', role: 'System Tester', link: '#' },
+                { name: 'Kim Mendoza', role: 'System Tester', link: '#' },
               ].map((member, i) => (
                 <div key={i} className="bg-slate-900 border border-slate-800 hover:border-emerald-500/50 rounded-2xl p-6 transition-all duration-300 hover:shadow-lg group flex flex-col justify-between">
                   <div className="mb-5">
@@ -292,15 +308,15 @@ export default function FinShieldDetail() {
             </h2>
             <div className="mb-6 pb-6 border-b border-slate-800">
               <p className="text-lg text-slate-300 font-medium leading-relaxed">
-                As <strong className="text-white">Project Manager &amp; Lead Full Stack Developer</strong>, I led the agile development lifecycle, engineered the backend REST architecture, and designed the blockchain integrity verification pipeline.
+                As <strong className="text-white">Frontend Developer &amp; Documentator</strong>, I crafted the client interface across role-specific workspaces, implemented interactive invoice document handling, and authored the technical documentation covering system architecture, security workflows, and verification mechanisms.
               </p>
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {[
-                { title: 'Project Management & Architecture', desc: 'Guided iterative Scrum sprints, gathered core business requirements, and architected the layered service-oriented system boundaries.' },
-                { title: 'API & RBAC Engine', desc: 'Developed the Express.js API with Zod validation, multi-tenant company and branch scoping, and strict role-based access control.' },
-                { title: 'Blockchain Integrity Anchoring', desc: 'Engineered Polygon smart contract integration using ethers.js to record SHA-256 document hashes while keeping confidential customer data off-chain.' },
-                { title: 'Asynchronous Queues & Infrastructure', desc: 'Implemented Redis and BullMQ outbox worker processing for non-blocking invoice generation, automated storage vaulting, and Docker containerization.' },
+                { title: 'Frontend UI/UX Design', desc: 'Designed and implemented intuitive, role-specific Next.js workspaces for Superadmin, Business Owners, Branch Managers, and Cashiers with responsive data visualization and dark-mode styling.' },
+                { title: 'Invoice Document Handling', desc: 'Engineered client-side invoice drafting, live BIR-compliant tax calculations, automated item-catalog lookups, and asynchronous PDF generation pipelines.' },
+                { title: 'Secure Document Handling & Vaulting', desc: 'Implemented private S3-compatible encrypted document archiving, versioned retrieval protocols, SHA-256 hash generation upon creation, and access-controlled file delivery.' },
+                { title: 'Technical & Capstone Documentation', desc: 'Authored comprehensive project documentation detailing system architecture, data-flow diagrams, document handling lifecycles, and cryptographic verification processes.' },
               ].map((contrib, i) => (
                 <div key={i} className="bg-slate-900 border border-slate-800 rounded-2xl p-6 hover:border-emerald-500/50 transition-colors duration-300 shadow-sm">
                   <h3 className="text-xl font-bold text-white mb-3"><span className="text-emerald-400">{contrib.title}</span></h3>

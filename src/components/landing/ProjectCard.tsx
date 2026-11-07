@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image, { StaticImageData } from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface ProjectCardProps {
@@ -9,36 +10,46 @@ interface ProjectCardProps {
   title: string;
   description: string;
   techStack: string[];
-  thumbnail?: any;
-  images?: any[];
-  logo?: any;
-  icon?: any;
+  thumbnail?: string | StaticImageData;
+  images?: (string | StaticImageData)[];
+  logo?: string | StaticImageData;
+  icon?: string | StaticImageData;
   themeClass?: string;
   showAccentTags?: boolean; // when true: use light yellow / black tags in non-hovered state
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ id, title, description, techStack, thumbnail, images, logo, icon, themeClass, showAccentTags }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({
+  id,
+  title,
+  description,
+  techStack,
+  thumbnail,
+  images,
+  logo,
+  icon,
+  themeClass,
+  showAccentTags,
+}) => {
   const [isHovered, setIsHovered] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const displayImages = images?.length ? images : (thumbnail ? [thumbnail] : []);
 
   useEffect(() => {
-    let interval: NodeJS.Timeout;
-    if (isHovered && displayImages.length > 1) {
-      interval = setInterval(() => {
-        setCurrentImageIndex((prev) => (prev + 1) % displayImages.length);
-      }, 2000); // 2 second carousel speed
-    } else {
-      setCurrentImageIndex(0);
-    }
+    if (!isHovered || displayImages.length <= 1) return;
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % displayImages.length);
+    }, 2000); // 2 second carousel speed
     return () => clearInterval(interval);
   }, [isHovered, displayImages.length]);
 
   return (
     <motion.div
       onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseLeave={() => {
+        setIsHovered(false);
+        setCurrentImageIndex(0);
+      }}
       whileHover={{ y: -6, boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)' }}
       transition={{ type: 'spring', stiffness: 260, damping: 22 }}
       className={`border rounded-2xl overflow-hidden shadow-lg group h-full flex flex-col transition-all duration-500 relative z-10 ${
@@ -59,7 +70,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ id, title, description, techS
               exit={{ opacity: 0 }}
               transition={{ duration: 0.8 }}
               className="absolute inset-0 bg-cover bg-center"
-              style={{ backgroundImage: `url(${typeof displayImages[currentImageIndex] === 'string' ? displayImages[currentImageIndex] : displayImages[currentImageIndex]?.src || ''})` }}
+              style={{
+                backgroundImage: `url(${
+                  typeof displayImages[currentImageIndex] === 'string'
+                    ? displayImages[currentImageIndex]
+                    : (displayImages[currentImageIndex] as StaticImageData)?.src || ''
+                })`,
+              }}
             />
           ) : (
             <span className="text-4xl opacity-20 text-slate-800 font-bold">{'<>'}</span>
@@ -79,17 +96,20 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ id, title, description, techS
               {/* Icon + Logo side by side */}
               <div className="flex items-center gap-3">
                 {icon && (
-                  <img
-                    src={typeof icon === 'string' ? icon : icon.src}
+                  <Image
+                    src={icon}
                     alt={`${title} icon`}
+                    width={48}
+                    height={48}
                     className="w-12 h-12 object-contain rounded-xl shadow-lg ring-2 ring-white/20 flex-shrink-0"
                   />
                 )}
-                <img 
-                  src={typeof logo === 'string' ? logo : logo.src} 
-                  alt={`${title} Logo`} 
-                  className="max-w-[130px] max-h-[70px] drop-shadow-2xl" 
-                  style={{ objectFit: 'contain' }}
+                <Image
+                  src={logo}
+                  alt={`${title} Logo`}
+                  width={130}
+                  height={70}
+                  className="max-w-[130px] max-h-[70px] drop-shadow-2xl object-contain"
                 />
               </div>
             </motion.div>
@@ -99,52 +119,64 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ id, title, description, techS
 
       {/* Content */}
       <div className="p-6 sm:p-8 flex flex-col flex-1 relative z-20 transition-colors duration-500">
-        <h3 
-          className={`text-2xl font-extrabold mb-3 tracking-tight transition-colors duration-500 ${!isHovered || !themeClass ? 'text-slate-900' : ''}`}
+        <h3
+          className={`text-2xl font-extrabold mb-3 tracking-tight transition-colors duration-500 ${
+            !isHovered || !themeClass ? 'text-slate-900' : ''
+          }`}
           style={isHovered && themeClass ? { color: 'var(--project-card-hover-heading)' } : undefined}
         >
           {title}
         </h3>
-        <p 
-          className={`mb-6 leading-relaxed flex-1 font-medium transition-colors duration-500 ${!isHovered || !themeClass ? 'text-slate-500' : ''}`}
-          style={isHovered && themeClass ? { color: 'var(--project-card-hover-body)' } : undefined}
+
+        <p
+          className="text-sm leading-relaxed mb-6 flex-1 line-clamp-3 transition-colors duration-500"
+          style={isHovered && themeClass ? { color: 'var(--project-card-hover-body)' } : { color: '#64748b' }}
         >
           {description}
         </p>
 
-        {/* Tech tags */}
-        <div className="flex flex-wrap gap-2 mb-8">
-          {techStack.slice(0, 3).map((tech) => (
-            <span key={tech} 
-              className={`px-3 py-1.5 rounded-lg text-[13px] font-bold border shadow-sm cursor-default transition-all duration-500 ${
-              isHovered && themeClass
-                ? 'bg-[var(--project-accent)] border-transparent'
-                : showAccentTags
-                  ? 'bg-white text-black border-slate-200'
-                  : 'bg-slate-50 text-slate-700 border-slate-200/60'
-            }`}
-              style={isHovered && themeClass ? { color: 'var(--tag-text)' } : undefined}
+        {/* Tech Stack Tags */}
+        <div className="flex flex-wrap gap-1.5 mb-6">
+          {techStack.map((tech) => (
+            <span
+              key={tech}
+              className={`text-xs px-2.5 py-1 rounded-md font-semibold transition-colors duration-500 ${
+                isHovered && themeClass
+                  ? 'border border-[var(--tag-border,rgba(255,255,255,0.2))] text-[var(--tag-text,#ffffff)]'
+                  : showAccentTags
+                  ? 'bg-yellow-50 text-slate-800 border border-yellow-200/80 font-bold'
+                  : 'bg-slate-100 text-slate-600'
+              }`}
+              style={isHovered && themeClass ? { backgroundColor: 'var(--tag-bg, rgba(255,255,255,0.05))' } : undefined}
             >
               {tech}
             </span>
           ))}
         </div>
 
-        {/* Learn more link */}
-        <Link
-          href={`/project/${id}`}
-          className={`font-bold inline-flex items-center gap-1.5 transition-colors duration-500 mt-auto group-hover:-translate-y-0.5 ${!isHovered || !themeClass ? 'text-blue-600 hover:text-blue-700' : ''}`}
-          style={isHovered && themeClass ? { color: 'var(--project-card-hover-link)' } : undefined}
-        >
-          Learn More
-          <motion.span
-            className="inline-block"
-            whileHover={{ x: 4 }}
-            transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+        {/* Footer / Link */}
+        <div className="pt-4 border-t border-slate-100 flex items-center justify-between mt-auto transition-colors duration-500">
+          <Link
+            href={`/project/${id}`}
+            className="font-bold text-sm flex items-center gap-1.5 transition-colors duration-300"
+            style={isHovered && themeClass ? { color: 'var(--project-card-hover-link)' } : { color: '#2563eb' }}
           >
-            &rarr;
-          </motion.span>
-        </Link>
+            Explore Project
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              fill="currentColor"
+              className="transition-transform group-hover:translate-x-1 duration-300"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fillRule="evenodd"
+                d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
+              />
+            </svg>
+          </Link>
+        </div>
       </div>
     </motion.div>
   );
