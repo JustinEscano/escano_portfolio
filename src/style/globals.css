@@ -336,3 +336,23 @@ button {
   --project-card-hover-body: #ffffff;
   --project-card-hover-link: #ffffff;
 }
+
+/* FinShield Theme */
+.theme-finshield {
+  --project-hero-bg: #0b1329;
+  --project-bg: #080e1e;
+  --project-card-bg: #0f192f;
+  --project-card-bg-dim: rgba(15, 25, 47, 0.6);
+  --project-terminal-bg: #030712;
+  --project-terminal-header: #0b1329;
+  --project-accent: #10b981;
+  --tag-bg: rgba(16, 185, 129, 0.12);
+  --tag-text: #34d399;
+  --tag-border: #10b981;
+  --text-heading: #ffffff;
+  --text-body: #94a3b8;
+  --project-card-hover-bg: #132240;
+  --project-card-hover-heading: #34d399;
+  --project-card-hover-body: #f8fafc;
+  --project-card-hover-link: #10b981;
+}

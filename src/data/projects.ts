@@ -14,6 +14,12 @@ import sisDashboardSS from '../assets/SIS/SIS_DASHBOARD_SS.png';
 import sisLoginSS from '../assets/SIS/SIS_LOGIN_SS.png';
 import sisStatsSS from '../assets/SIS/SIS_STATS_SS.png';
 import sisSubjectsSS from '../assets/SIS/SIS_SUBJECTS_SS.png';
+import finshieldAdminSS from '../assets/Finshield/Admin Dashboard.png';
+import finshieldSuperadminSS from '../assets/Finshield/Superadmin Dashboard.png';
+import finshieldInvoiceSS from '../assets/Finshield/Invoice Creation.png';
+import finshieldReportsSS from '../assets/Finshield/Business Owner Reports.png';
+
+import type { StaticImageData } from 'next/image';
 
 export interface Project {
   id: string;
@@ -21,10 +27,10 @@ export interface Project {
   description: string;
   longDescription?: string;
   techStack: string[];
-  thumbnail?: string | any;
-  images?: string[] | any[];
-  logo?: string | any;
-  icon?: string | any;
+  thumbnail?: string | StaticImageData;
+  images?: (string | StaticImageData)[];
+  logo?: string | StaticImageData;
+  icon?: string | StaticImageData;
   themeClass?: string;
   githubLink?: string;
   liveLink?: string;
@@ -89,6 +95,27 @@ export const projects: Project[] = [
       'Grade and GWA computation',
       'Academic statistics dashboard',
       'Role-based access control',
+    ],
+  },
+  {
+    id: 'finshield',
+    title: 'FinShield',
+    description: 'An enterprise invoice management and blockchain verification system that anchors document hashes on Polygon and leverages Redis/BullMQ outbox processing and visual diff analysis.',
+    longDescription: 'FinShield is an invoice management and blockchain protection verification system designed to prevent fraud, ensure document integrity, and streamline operational billing. Featuring a layered service-oriented architecture, FinShield combines Next.js, Express.js, PostgreSQL/Prisma, Redis & BullMQ outbox workers, private S3 storage, Polygon blockchain anchoring, and Python document-difference analysis.',
+    techStack: ['Next.js', 'Express.js', 'PostgreSQL', 'Polygon', 'Redis', 'Python'],
+    type: 'team',
+    thumbnail: finshieldAdminSS,
+    images: [finshieldAdminSS, finshieldSuperadminSS, finshieldInvoiceSS, finshieldReportsSS],
+    themeClass: 'theme-finshield',
+    showAccentTags: true,
+    githubLink: 'https://github.com/JustinEscano',
+    features: [
+      'Polygon blockchain cryptographic anchoring',
+      'Asynchronous BullMQ worker queues',
+      'Private S3-compatible encrypted vault',
+      'FastAPI & PyMuPDF visual diff analysis',
+      'Multi-tenant role-based access control',
+      'BIR-compliant invoice and refund approval',
     ],
   },
 ];

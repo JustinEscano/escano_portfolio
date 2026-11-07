@@ -45,6 +45,7 @@ const Footer: React.FC = () => {
           <div className="space-y-6">
             <h3 className="text-white font-bold tracking-widest uppercase text-sm mb-6">Projects</h3>
             <ul className="space-y-4">
+              <li><a href="/project/finshield" className="hover:text-accent transition-colors">FinShield</a></li>
               <li><a href="/project/orbit" className="hover:text-accent transition-colors">Orbit</a></li>
               <li><a href="/project/watchout" className="hover:text-accent transition-colors">Watchout!</a></li>
               <li><a href="/project/student-information-system" className="hover:text-accent transition-colors">Student Information System</a></li>

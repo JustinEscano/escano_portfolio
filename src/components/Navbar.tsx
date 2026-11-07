@@ -65,7 +65,7 @@ const Navbar: React.FC = () => {
   // On home/other non-project pages when scrolled: white bg, dark text
   // On project pages with dark hero: project-themed bg, white text
   // On project pages with light hero: transparent, dark text
-  const darkHeroProjects = ['/project/orbit', '/project/student-information-system'];
+  const darkHeroProjects = ['/project/orbit', '/project/student-information-system', '/project/finshield'];
   const isLightHero = isProjectPage && !darkHeroProjects.includes(pathname ?? '');
   const isHomePage = !isProjectPage;
 
