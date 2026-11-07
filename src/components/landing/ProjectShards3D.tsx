@@ -1,25 +1,34 @@
 "use client";
 
-import React, { useRef, useMemo } from 'react';
+import React, { useRef, useMemo, Suspense } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Environment } from '@react-three/drei';
 import * as THREE from 'three';
-import { motion, useInView, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 
 // Enable global Three.js resource cache
 THREE.Cache.enabled = true;
+
+// Module-level singletons: allocated once in memory, shared across all shards
+const CACHED_SHARD_GEOMETRY = new THREE.CircleGeometry(1, 3);
+const CACHED_SHARD_MATERIAL = new THREE.MeshStandardMaterial({
+  color: '#3b82f6',
+  metalness: 0.6,
+  roughness: 0.2,
+  transparent: true,
+  opacity: 0.7,
+  flatShading: true,
+  side: THREE.DoubleSide,
+});
 
 interface ShardProps {
   position: [number, number, number];
   scale: [number, number, number];
   rotationSpeed: { x: number; y: number; z?: number };
   phaseOffset: number;
-  geometry: THREE.BufferGeometry;
-  material: THREE.Material;
 }
 
 // Individual Shard Component sharing cached geometry and material
-const Shard = ({ position, scale, rotationSpeed, phaseOffset, geometry, material }: ShardProps) => {
+const Shard = ({ position, scale, rotationSpeed, phaseOffset }: ShardProps) => {
   const meshRef = useRef<THREE.Mesh>(null);
   const time = useRef(phaseOffset);
 
@@ -37,73 +46,73 @@ const Shard = ({ position, scale, rotationSpeed, phaseOffset, geometry, material
   return (
     <mesh
       ref={meshRef}
-      geometry={geometry}
-      material={material}
+      geometry={CACHED_SHARD_GEOMETRY}
+      material={CACHED_SHARD_MATERIAL}
       position={position}
       scale={scale}
     />
   );
 };
 
-// Cloud wrapper that distributes them over the parent bounds with cached assets
+// Cloud wrapper that distributes shards strictly to the outer left and right sides
 const ShardCloud = () => {
   const { viewport } = useThree();
 
-  // Cached geometry and material shared across all shards to reduce draw call overhead
-  const sharedGeometry = useMemo(() => new THREE.CircleGeometry(1, 3), []);
-  const sharedMaterial = useMemo(
-    () =>
-      new THREE.MeshStandardMaterial({
-        color: '#3b82f6',
-        metalness: 0.6,
-        roughness: 0.2,
-        transparent: true,
-        opacity: 0.7,
-        flatShading: true,
-        side: THREE.DoubleSide,
-      }),
-    []
-  );
+  // Position shards strictly on the outer left and right flanks of the viewport
+  const shards = useMemo(() => {
+    const aspect = viewport.width / viewport.height;
+    const tanHalfFov = Math.tan((45 / 2) * (Math.PI / 180));
 
-  const shards = useMemo(
-    () => [
+    const getSidePosition = (side: 'left' | 'right', yRatio: number, z: number, edgePercent = 0.88) => {
+      const dist = 15 - z;
+      const halfW = dist * tanHalfFov * aspect;
+      const halfH = dist * tanHalfFov;
+      const x = (side === 'left' ? -1 : 1) * halfW * edgePercent;
+      const y = halfH * yRatio;
+      return [x, y, z] as [number, number, number];
+    };
+
+    return [
       {
-        position: [-viewport.width * 0.8, viewport.height * 0.35, -4] as [number, number, number],
-        scale: [1.2, 3, 1] as [number, number, number],
+        // Far left, upper flank
+        position: getSidePosition('left', 0.45, -4, 0.88),
+        scale: [1.3, 3.2, 1] as [number, number, number],
         rotationSpeed: { x: 0.01, y: 0.02, z: -0.01 },
         phaseOffset: 12.5,
       },
       {
-        position: [-viewport.width * 0.7, -viewport.height * 0.1, -6] as [number, number, number],
-        scale: [1.5, 4, 1] as [number, number, number],
+        // Far left, lower flank
+        position: getSidePosition('left', -0.35, -6, 0.86),
+        scale: [1.6, 4.0, 1] as [number, number, number],
         rotationSpeed: { x: -0.01, y: 0.01, z: 0.015 },
         phaseOffset: 34.2,
       },
       {
-        position: [viewport.width * 0.8, viewport.height * 0.3, -8] as [number, number, number],
-        scale: [3, 4, 1] as [number, number, number],
+        // Far right, upper flank
+        position: getSidePosition('right', 0.40, -7, 0.88),
+        scale: [2.8, 3.8, 1] as [number, number, number],
         rotationSpeed: { x: 0.005, y: 0.005, z: 0.01 },
         phaseOffset: 58.7,
       },
-    ],
-    [viewport]
-  );
+      {
+        // Far right, lower flank
+        position: getSidePosition('right', -0.38, -5, 0.86),
+        scale: [1.7, 3.5, 1] as [number, number, number],
+        rotationSpeed: { x: -0.008, y: 0.012, z: -0.01 },
+        phaseOffset: 77.1,
+      },
+    ];
+  }, [viewport.width, viewport.height]);
 
   return (
-    <>
-      <ambientLight intensity={0.6} />
-      <directionalLight position={[10, 10, 5]} intensity={1.5} color="#ffffff" />
-      <directionalLight position={[-10, -10, -5]} intensity={0.8} color="#60a5fa" />
-      <Environment preset="city" />
+    <Suspense fallback={null}>
+      <ambientLight intensity={0.7} />
+      <directionalLight position={[10, 10, 5]} intensity={1.8} color="#ffffff" />
+      <directionalLight position={[-10, -10, -5]} intensity={1.0} color="#60a5fa" />
       {shards.map((props, i) => (
-        <Shard
-          key={i}
-          {...props}
-          geometry={sharedGeometry}
-          material={sharedMaterial}
-        />
+        <Shard key={i} {...props} />
       ))}
-    </>
+    </Suspense>
   );
 };
 
@@ -120,21 +129,23 @@ export default function ProjectShards3D() {
 
   return (
     <div ref={ref} className="absolute inset-0 z-0 pointer-events-none w-full h-full overflow-hidden hidden md:block">
-      <motion.div style={{ opacity: scrollOpacity }} className="w-full h-full relative">
-        <Canvas
-          frameloop={isInView ? 'always' : 'never'}
-          dpr={[1, 1.25]}
-          camera={{ position: [0, 0, 15], fov: 45 }}
-          gl={{
-            powerPreference: 'low-power',
-            antialias: true,
-            alpha: true,
-            stencil: false,
-          }}
-        >
-          <ShardCloud />
-        </Canvas>
-      </motion.div>
+      <div className="sticky top-0 w-full h-screen overflow-hidden">
+        <motion.div style={{ opacity: scrollOpacity }} className="w-full h-full relative">
+          <Canvas
+            frameloop={isInView ? 'always' : 'never'}
+            dpr={[1, 1.25]}
+            camera={{ position: [0, 0, 15], fov: 45 }}
+            gl={{
+              powerPreference: 'low-power',
+              antialias: true,
+              alpha: true,
+              stencil: false,
+            }}
+          >
+            <ShardCloud />
+          </Canvas>
+        </motion.div>
+      </div>
     </div>
   );
 }

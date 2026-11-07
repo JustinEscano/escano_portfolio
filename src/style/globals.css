@@ -356,3 +356,12 @@ button {
   --project-card-hover-body: #f8fafc;
   --project-card-hover-link: #10b981;
 }
+
+.theme-finshield h1,
+.theme-finshield h2,
+.theme-finshield h3,
+.theme-finshield h4,
+.theme-finshield h5,
+.theme-finshield h6 {
+  color: #ffffff;
+}

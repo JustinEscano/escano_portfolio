@@ -65,19 +65,21 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           {displayImages.length > 0 ? (
             <motion.div
               key={currentImageIndex}
-              initial={{ opacity: 0, scale: 1 }}
+              initial={{ opacity: 0 }}
               animate={{ opacity: 1, scale: isHovered ? 1.05 : 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.8 }}
-              className="absolute inset-0 bg-cover bg-center"
-              style={{
-                backgroundImage: `url(${
-                  typeof displayImages[currentImageIndex] === 'string'
-                    ? displayImages[currentImageIndex]
-                    : (displayImages[currentImageIndex] as StaticImageData)?.src || ''
-                })`,
-              }}
-            />
+              transition={{ duration: 0.6 }}
+              className="absolute inset-0 overflow-hidden"
+            >
+              <Image
+                src={displayImages[currentImageIndex]}
+                alt={`${title} preview ${currentImageIndex + 1}`}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                className="object-cover object-center"
+                priority={currentImageIndex === 0}
+              />
+            </motion.div>
           ) : (
             <span className="text-4xl opacity-20 text-slate-800 font-bold">{'<>'}</span>
           )}
@@ -93,9 +95,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
               transition={{ duration: 0.4 }}
               className="absolute inset-0 bg-slate-900/60 flex items-center justify-center backdrop-blur-sm"
             >
-              {/* Icon + Logo side by side */}
-              <div className="flex items-center gap-3">
-                {icon && (
+              {/* Icon + Logo side by side or single centered logo */}
+              <div className="flex items-center justify-center gap-3 px-4">
+                {icon && icon !== logo && (
                   <Image
                     src={icon}
                     alt={`${title} icon`}
@@ -107,9 +109,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
                 <Image
                   src={logo}
                   alt={`${title} Logo`}
-                  width={130}
-                  height={70}
-                  className="max-w-[130px] max-h-[70px] drop-shadow-2xl object-contain"
+                  width={140}
+                  height={80}
+                  className="max-w-[140px] max-h-[80px] drop-shadow-2xl object-contain"
                 />
               </div>
             </motion.div>
@@ -128,12 +130,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           {title}
         </h3>
 
-        <p
-          className="text-sm leading-relaxed mb-6 flex-1 line-clamp-3 transition-colors duration-500"
-          style={isHovered && themeClass ? { color: 'var(--project-card-hover-body)' } : { color: '#64748b' }}
-        >
-          {description}
-        </p>
+        <div className="flex-1 mb-6 min-h-[4.5rem]">
+          <p
+            className="text-sm leading-relaxed line-clamp-3 overflow-hidden transition-colors duration-500"
+            style={isHovered && themeClass ? { color: 'var(--project-card-hover-body)' } : { color: '#64748b' }}
+          >
+            {description}
+          </p>
+        </div>
 
         {/* Tech Stack Tags */}
         <div className="flex flex-wrap gap-1.5 mb-6">

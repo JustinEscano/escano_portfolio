@@ -1,46 +1,28 @@
 "use client";
 
-import React, { useRef, useState, useEffect, useMemo } from 'react';
+import React, { useRef, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Environment, OrthographicCamera } from '@react-three/drei';
+import { OrthographicCamera } from '@react-three/drei';
 import * as THREE from 'three';
 import { useInView } from 'framer-motion';
 
-// Enable global Three.js resource cache (textures, envmaps, geometries)
+// Global Three.js resource cache enabled
 THREE.Cache.enabled = true;
+
+// Module-level singletons: instanced once, cached in memory forever
+const CACHED_BOX_GEOMETRY = new THREE.BoxGeometry(2.5, 2.5, 2.5);
+const CACHED_BOX_MATERIAL = new THREE.MeshStandardMaterial({
+  color: '#3b82f6', // tailwind blue-500
+  metalness: 0.15,
+  roughness: 0.15,
+  side: THREE.DoubleSide,
+  transparent: true,
+  opacity: 0.92,
+});
 
 const AnimatedBox = () => {
   const meshRef = useRef<THREE.Mesh>(null);
-
-  // Cached material to avoid re-allocating WebGL shaders on re-renders
-  const material = useMemo(
-    () =>
-      new THREE.MeshStandardMaterial({
-        color: '#3b82f6', // tailwind blue-500
-        metalness: 0.1,
-        roughness: 0.2,
-        envMapIntensity: 1.0,
-        side: THREE.DoubleSide,
-        transparent: true,
-        opacity: 0.9,
-      }),
-    []
-  );
-
-  // Cached geometry to avoid memory leaks and repeated buffer uploads
-  const geometry = useMemo(() => new THREE.BoxGeometry(2.5, 2.5, 2.5), []);
-
-  const [isMobile, setIsMobile] = useState(true);
-
-  useEffect(() => {
-    const checkSize = () => setIsMobile(window.innerWidth < 768);
-    checkSize();
-    window.addEventListener('resize', checkSize);
-    return () => window.removeEventListener('resize', checkSize);
-  }, []);
-
   const time = useRef(0);
-  const basePositionY = isMobile ? 0.5 : 0;
 
   useFrame((state, delta) => {
     if (!meshRef.current) return;
@@ -51,17 +33,17 @@ const AnimatedBox = () => {
     meshRef.current.rotation.z = 0.3;
     meshRef.current.rotation.y += delta * 0.3;
 
-    // Sine-wave vertical float
-    meshRef.current.position.y = basePositionY + Math.sin(time.current * 2) * 0.1;
+    // Smooth sine-wave float
+    meshRef.current.position.y = Math.sin(time.current * 2) * 0.1;
   });
 
   return (
     <mesh
       ref={meshRef}
-      geometry={geometry}
-      material={material}
-      position={[0, basePositionY, 0]}
-      scale={isMobile ? 1.0 : 1.5}
+      geometry={CACHED_BOX_GEOMETRY}
+      material={CACHED_BOX_MATERIAL}
+      position={[0, 0, 0]}
+      scale={1.5}
     />
   );
 };
@@ -69,26 +51,12 @@ const AnimatedBox = () => {
 export default function ScrollShape3D() {
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { margin: '150px' });
-  const [isMobile, setIsMobile] = useState(true);
-
-  useEffect(() => {
-    const checkSize = () => setIsMobile(window.innerWidth < 1024);
-    checkSize();
-    window.addEventListener('resize', checkSize);
-    return () => window.removeEventListener('resize', checkSize);
-  }, []);
-
-  if (isMobile) return null;
 
   return (
-    <div
-      ref={containerRef}
-      className="w-full h-full pointer-events-none flex items-center justify-center"
-      style={{ opacity: 0.8 }}
-    >
+    <div ref={containerRef} className="w-full h-full pointer-events-none flex items-center justify-center" style={{ opacity: 0.8 }}>
       <Canvas
         frameloop={isInView ? 'always' : 'never'}
-        dpr={[1, 1.5]}
+        dpr={[1, 1.25]}
         gl={{
           powerPreference: 'low-power',
           antialias: true,
@@ -96,12 +64,15 @@ export default function ScrollShape3D() {
           stencil: false,
         }}
       >
-        <OrthographicCamera makeDefault position={[0, 0, 10]} zoom={60} />
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[10, 10, 5]} intensity={1.5} color="#ffffff" />
-        <directionalLight position={[-10, -10, -5]} intensity={0.5} color="#60a5fa" />
-        <Environment preset="city" />
-        <AnimatedBox />
+        <Suspense fallback={null}>
+          <OrthographicCamera makeDefault position={[0, 0, 10]} zoom={60} />
+          {/* Zero-network 3-point studio lighting: eliminates 2.5MB external HDR download */}
+          <ambientLight intensity={0.7} />
+          <directionalLight position={[10, 10, 5]} intensity={1.8} color="#ffffff" />
+          <directionalLight position={[-10, 10, -5]} intensity={1.0} color="#93c5fd" />
+          <directionalLight position={[0, -10, 0]} intensity={0.4} color="#3b82f6" />
+          <AnimatedBox />
+        </Suspense>
       </Canvas>
     </div>
   );

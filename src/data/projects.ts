@@ -18,7 +18,7 @@ import finshieldAdminSS from '../assets/Finshield/Admin Dashboard.png';
 import finshieldSuperadminSS from '../assets/Finshield/Superadmin Dashboard.png';
 import finshieldInvoiceSS from '../assets/Finshield/Invoice Creation.png';
 import finshieldReportsSS from '../assets/Finshield/Business Owner Reports.png';
-import finshieldLogo from '../assets/Finshield/FinShield Logo.png';
+import finshieldLogo from '../assets/Finshield/FinShield.svg';
 
 import type { StaticImageData } from 'next/image';
 
@@ -51,7 +51,6 @@ export const projects: Project[] = [
     thumbnail: finshieldAdminSS,
     images: [finshieldAdminSS, finshieldSuperadminSS, finshieldInvoiceSS, finshieldReportsSS],
     logo: finshieldLogo,
-    icon: finshieldLogo,
     themeClass: 'theme-finshield',
     showAccentTags: true,
     githubLink: 'https://github.com/JustinEscano',
@@ -89,7 +88,7 @@ export const projects: Project[] = [
   {
     id: 'watchout',
     title: 'Watch Out!',
-    description: 'A fun, back-to-basics pixelated platformer game about reaching the highest stage you can depending on your skill level. Inspired by retro classics, Watch Out! brings back the charm of old-school platforming with a modern touch.',
+    description: 'A fun, retro-inspired pixelated platformer where players dodge obstacles and jump across dynamic platforms to reach the highest stage.',
     techStack: ['Python', 'Pygame', 'Platformer', 'Retro'],
     type: 'team',
     thumbnail: watchoutTitleSS,

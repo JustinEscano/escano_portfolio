@@ -103,19 +103,14 @@ const Projects: React.FC = () => {
               </AnimatePresence>
             </motion.div>
 
-            {/* View More / Show Less Button */}
+            {/* View All / Show Less Button */}
             {teamProjects.length > 3 && (
-              <motion.div 
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                className="mt-12 flex justify-center"
-              >
+              <div className="mt-12 flex justify-center relative z-20">
                 <button 
                   onClick={() => setShowAllTeam(!showAllTeam)}
-                  className="px-8 py-3 rounded-full border border-white/20 bg-white/5 hover:bg-white/10 text-white transition-all font-medium flex items-center gap-2 group"
+                  className="px-8 py-3.5 rounded-full border-2 border-slate-900 bg-slate-900 hover:bg-blue-600 hover:border-blue-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 font-bold text-sm sm:text-base flex items-center gap-2 group cursor-pointer"
                 >
-                  {showAllTeam ? 'Show Less' : 'View All Projects'}
+                  <span>{showAllTeam ? 'Show Less' : 'View All Projects'}</span>
                   <svg 
                     xmlns="http://www.w3.org/2000/svg" 
                     width="16" height="16" fill="currentColor" 
@@ -125,7 +120,7 @@ const Projects: React.FC = () => {
                     <path fillRule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                   </svg>
                 </button>
-              </motion.div>
+              </div>
             )}
           </div>
         )}

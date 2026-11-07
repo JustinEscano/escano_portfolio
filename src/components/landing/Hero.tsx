@@ -9,12 +9,7 @@ import {
   Variants,
 } from 'framer-motion';
 import TypedWrapper from '../misc/Typed';
-import dynamic from 'next/dynamic';
-
-const ScrollShape3D = dynamic(() => import('./HomeShape3D'), {
-  ssr: false,
-  loading: () => null,
-});
+import ScrollShape3D from './HomeShape3D';
 
 // ─── Animation Variants ───────────────────────────────────────────────────────
 
